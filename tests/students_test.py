@@ -41,6 +41,33 @@ def test_post_assignment_student_1(client, h_student_1):
     assert data['state'] == 'DRAFT'
     assert data['teacher_id'] is None
 
+
+#test for '/' end point
+def test_ready_state(client):
+    response= client.get('/')
+
+    assert response.status_code==200
+    
+#invalid header
+def test_get_assignment_student_invalid(client,h_teacher_1):
+    response = client.get(
+        '/student/assignments',
+        headers=h_teacher_1
+    )
+
+    assert response.status_code == 403
+
+#no header
+def test_get_assignment_student_no_header(client):
+    response = client.get(
+        '/student/assignments',
+        headers=None
+    )
+
+    assert response.status_code == 401
+
+
+
 #assignment id not none
 def test_post_assignment_student_1_update(client, h_student_1):
     content = 'New solution T1'
