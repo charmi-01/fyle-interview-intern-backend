@@ -22,8 +22,11 @@ def list_assignments(p):
 @decorators.auth_principal
 def upsert_assignment(p, incoming_payload):
     """Create or Edit an assignment"""
+    # print(incoming_payload)
     assignment = AssignmentSchema().load(incoming_payload)
+    # print(assignment)
     assignment.student_id = p.student_id
+    # print(assignment)
 
     upserted_assignment = Assignment.upsert(assignment)
     db.session.commit()
